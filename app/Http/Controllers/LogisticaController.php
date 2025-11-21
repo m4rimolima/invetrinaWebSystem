@@ -1,65 +1,53 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Logistica;
-use Illuminate\Http\Request;
+use App\Models\Obra;
+use App\Http\Requests\LogisticaRequest;
 
 class LogisticaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $logs = Logistica::with('obra.artist','exposicao')->latest()->paginate(10);
+        return view('logisticas.index', compact('logs'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $obras = Obra::with('artist')->orderBy('titulo')->get();
+        $exposicoes = \App\Models\Exposicao::orderBy('nome')->get();
+        return view('logisticas.create', compact('obras','exposicoes'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(LogisticaRequest $request)
     {
-        //
+        Logistica::create($request->validated());
+        return redirect()->route('logisticas.index')->with('success','Logística criada.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Logistica $logistica)
     {
-        //
+        $logistica->load('obra.artist','exposicao');
+        return view('logisticas.show', compact('logistica'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Logistica $logistica)
     {
-        //
+        $obras = Obra::with('artist')->orderBy('titulo')->get();
+        $exposicoes = \App\Models\Exposicao::orderBy('nome')->get();
+        return view('logisticas.edit', compact('logistica','obras','exposicoes'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Logistica $logistica)
+    public function update(LogisticaRequest $request, Logistica $logistica)
     {
-        //
+        $logistica->update($request->validated());
+        return redirect()->route('logisticas.index')->with('success','Logística atualizada.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Logistica $logistica)
     {
-        //
+        $logistica->delete();
+        return redirect()->route('logisticas.index')->with('success','Logística removida.');
     }
 }

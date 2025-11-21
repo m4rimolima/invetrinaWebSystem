@@ -1,65 +1,62 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Obra;
-use Illuminate\Http\Request;
+use App\Models\Artist;
+use App\Http\Requests\ObraRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ObraController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $obras = Obra::with('artist')->latest()->paginate(10);
+        return view('obras.index', compact('obras'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $artists = Artist::orderBy('nome')->get();
+        return view('obras.create', compact('artists'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(ObraRequest $request)
     {
-        //
+        $data = $request->validated();
+        if ($request->hasFile('imagem')) {
+            $data['imagem'] = $request->file('imagem')->store('obras', 'public');
+        }
+        Obra::create($data);
+        return redirect()->route('obras.index')->with('success','Obra criada com sucesso.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Obra $obra)
     {
-        //
+        $obra->load('artist','exposicoes');
+        return view('obras.show', compact('obra'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Obra $obra)
     {
-        //
+        $artists = Artist::orderBy('nome')->get();
+        return view('obras.edit', compact('obra','artists'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Obra $obra)
+    public function update(ObraRequest $request, Obra $obra)
     {
-        //
+        $data = $request->validated();
+        if ($request->hasFile('imagem')) {
+            if ($obra->imagem) Storage::disk('public')->delete($obra->imagem);
+            $data['imagem'] = $request->file('imagem')->store('obras', 'public');
+        }
+        $obra->update($data);
+        return redirect()->route('obras.index')->with('success','Obra atualizada com sucesso.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Obra $obra)
     {
-        //
+        if ($obra->imagem) Storage::disk('public')->delete($obra->imagem);
+        $obra->delete();
+        return redirect()->route('obras.index')->with('success','Obra removida.');
     }
 }
