@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\ObraController;
+use App\Http\Controllers\ExposicaoController;
+use App\Http\Controllers\LogisticaController;
 
 Route::get('/', function () {
     return view('welcome');
