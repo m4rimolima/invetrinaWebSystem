@@ -1,16 +1,25 @@
-<x-app-layout>
-  <div class="py-12 max-w-5xl mx-auto">
-    <h1 class="text-3xl font-bold mb-6">In Vetrina — Dashboard</h1>
+@extends('layouts.app')
 
-    @if(session('success'))
-      <div class="mb-4 p-3 bg-green-100 text-green-800 rounded">{{ session('success') }}</div>
-    @endif
+@section('content')
+<div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">Dashboard</h1>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <a href="{{ route('artists.index') }}" class="p-6 bg-white shadow rounded-lg text-center">Artistas</a>
-      <a href="{{ route('obras.index') }}" class="p-6 bg-white shadow rounded-lg text-center">Obras</a>
-      <a href="{{ route('exposicoes.index') }}" class="p-6 bg-white shadow rounded-lg text-center">Exposições</a>
-      <a href="{{ route('logisticas.index') }}" class="p-6 bg-white shadow rounded-lg text-center">Logísticas</a>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <a href="{{ route('artists.index') }}" class="bg-gray-100 text-gray-800 px-4 py-6 rounded shadow hover:bg-gray-200 text-center transition">
+            Artistas
+        </a>
+
+        <a href="{{ route('obras.index') }}" class="bg-gray-100 text-gray-800 px-4 py-6 rounded shadow hover:bg-gray-200 text-center transition">
+            Obras
+        </a>
+
+        <a href="{{ route('exposicoes.index') }}" class="bg-gray-100 text-gray-800 px-4 py-6 rounded shadow hover:bg-gray-200 text-center transition">
+            Exposições
+        </a>
+
+        <a href="{{ route('logisticas.index') }}" class="bg-gray-100 text-gray-800 px-4 py-6 rounded shadow hover:bg-gray-200 text-center transition">
+            Logísticas
+        </a>
     </div>
-  </div>
-</x-app-layout>
+</div>
+@endsection

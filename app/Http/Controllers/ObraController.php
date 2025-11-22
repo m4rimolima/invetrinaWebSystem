@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Obra;
@@ -10,53 +11,67 @@ class ObraController extends Controller
 {
     public function index()
     {
-        $obras = Obra::with('artist')->latest()->paginate(10);
+        $obras = Obra::with('artist')->paginate(10);
         return view('obras.index', compact('obras'));
     }
 
     public function create()
     {
-        $artists = Artist::orderBy('nome')->get();
+        $artists = Artist::all();
         return view('obras.create', compact('artists'));
     }
 
     public function store(ObraRequest $request)
     {
         $data = $request->validated();
+
         if ($request->hasFile('imagem')) {
             $data['imagem'] = $request->file('imagem')->store('obras', 'public');
         }
+
         Obra::create($data);
-        return redirect()->route('obras.index')->with('success','Obra criada com sucesso.');
+
+        return redirect()->route('obras.index')->with('success', 'Obra criada com sucesso!');
     }
 
     public function show(Obra $obra)
     {
-        $obra->load('artist','exposicoes');
+        $obra->load('artist');
         return view('obras.show', compact('obra'));
     }
 
     public function edit(Obra $obra)
     {
-        $artists = Artist::orderBy('nome')->get();
-        return view('obras.edit', compact('obra','artists'));
+        $artists = Artist::all();
+        return view('obras.edit', compact('obra', 'artists'));
     }
 
     public function update(ObraRequest $request, Obra $obra)
-    {
-        $data = $request->validated();
-        if ($request->hasFile('imagem')) {
-            if ($obra->imagem) Storage::disk('public')->delete($obra->imagem);
-            $data['imagem'] = $request->file('imagem')->store('obras', 'public');
+{
+    $data = $request->validated();
+
+    if ($request->hasFile('imagem')) {
+        // Deleta a imagem antiga se existir
+        if ($obra->imagem) {
+            Storage::disk('public')->delete($obra->imagem);
         }
-        $obra->update($data);
-        return redirect()->route('obras.index')->with('success','Obra atualizada com sucesso.');
+        // Salva a nova imagem
+        $data['imagem'] = $request->file('imagem')->store('obras', 'public');
     }
+
+    $obra->update($data);
+
+    return redirect()->route('obras.index')->with('success', 'Obra atualizada com sucesso!');
+}
+
 
     public function destroy(Obra $obra)
     {
-        if ($obra->imagem) Storage::disk('public')->delete($obra->imagem);
+        if ($obra->imagem) {
+            Storage::disk('public')->delete($obra->imagem);
+        }
         $obra->delete();
-        return redirect()->route('obras.index')->with('success','Obra removida.');
+
+        return redirect()->route('obras.index')->with('success', 'Obra removida.');
     }
 }

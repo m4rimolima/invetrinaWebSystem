@@ -11,18 +11,25 @@ class ArtistController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $artists = Artist::paginate(10); // 10 itens por página
-        return view('artists.index', compact('artists'));
-    }
+{
+    // Antes:
+    // $artists = Artist::all();
+
+    // Agora, com paginação:
+    $artists = Artist::paginate(10); // 10 por página
+    return view('artists.index', compact('artists'));
+}
+
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        return view('artists.create');
-    }
+{
+    return view('artists.create');
+}
+
 
     /**
      * Store a newly created resource in storage.
@@ -76,14 +83,21 @@ class ArtistController extends Controller
             ->with('success', 'Artista atualizado com sucesso!');
     }
 
+    public function show($id)
+    {
+        return redirect()->route('artists.index');
+    }
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Artist $artist)
-    {
-        $artist->delete();
+{
+    $artist->delete();
 
-        return redirect()->route('artists.index')
-            ->with('success', 'Artista removido com sucesso!');
-    }
+    // Flash message de sucesso
+    return redirect()->route('artists.index')->with('success', 'Artista excluído com sucesso!');
 }
+
+}
+

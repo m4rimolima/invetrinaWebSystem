@@ -1,30 +1,24 @@
 <?php
+
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Obra extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'titulo',
         'artist_id',
         'ano',
-        'descricao',
-        'tipo',
-        'dimensoes',
-        'localizacao_atual',
-        'imagem',
+        'tecnica',
+        'imagem', // se for usar upload de imagem
     ];
 
-    public function artist(): BelongsTo
+    public function artist()
     {
         return $this->belongsTo(Artist::class);
-    }
-
-    public function exposicoes(): BelongsToMany
-    {
-        return $this->belongsToMany(Exposicao::class, 'exposicao_obra');
     }
 }
