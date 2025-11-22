@@ -1,48 +1,89 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Artist;
-use App\Http\Requests\ArtistRequest;
+use Illuminate\Http\Request;
 
 class ArtistController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        $artists = Artist::latest()->paginate(10);
+        $artists = Artist::paginate(10); // 10 itens por página
         return view('artists.index', compact('artists'));
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
         return view('artists.create');
     }
 
-    public function store(ArtistRequest $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
-        Artist::create($request->validated());
-        return redirect()->route('artists.index')->with('success','Artista criado com sucesso.');
+        $request->validate([
+            'nome'            => 'required|string|max:255',
+            'nacionalidade'   => 'required|string|max:255',
+            'data_nascimento' => 'nullable|date',
+            'biografia'       => 'nullable|string',
+        ]);
+
+        Artist::create([
+            'nome'            => $request->nome,
+            'nacionalidade'   => $request->nacionalidade,
+            'biografia'       => $request->biografia,
+        ]);
+
+        return redirect()->route('artists.index')
+            ->with('success', 'Artista criado com sucesso!');
     }
 
-    public function show(Artist $artist)
-    {
-        $artist->load('obras');
-        return view('artists.show', compact('artist'));
-    }
-
+    /**
+     * Show the form for editing the specified resource.
+     */
     public function edit(Artist $artist)
     {
         return view('artists.edit', compact('artist'));
     }
 
-    public function update(ArtistRequest $request, Artist $artist)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Artist $artist)
     {
-        $artist->update($request->validated());
-        return redirect()->route('artists.index')->with('success','Artista atualizado.');
+        $request->validate([
+            'nome'            => 'required|string|max:255',
+            'nacionalidade'   => 'required|string|max:255',
+            'data_nascimento' => 'nullable|date',
+            'biografia'       => 'nullable|string',
+        ]);
+
+        $artist->update([
+            'nome'            => $request->nome,
+            'nacionalidade'   => $request->nacionalidade,
+            'biografia'       => $request->biografia,
+        ]);
+
+        return redirect()->route('artists.index')
+            ->with('success', 'Artista atualizado com sucesso!');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(Artist $artist)
     {
         $artist->delete();
-        return redirect()->route('artists.index')->with('success','Artista removido.');
+
+        return redirect()->route('artists.index')
+            ->with('success', 'Artista removido com sucesso!');
     }
 }

@@ -12,7 +12,6 @@ class ArtistRequest extends FormRequest
         return [
             'nome' => 'required|string|max:255',
             'nacionalidade' => 'nullable|string|max:255',
-            'data_nascimento' => 'nullable|date',
             'biografia' => 'nullable|string',
         ];
     }
