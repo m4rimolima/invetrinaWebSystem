@@ -26,8 +26,6 @@
                 <th class="py-2 px-4 border-b text-left">Local de Origem</th>
                 <th class="py-2 px-4 border-b text-left">Local de Destino</th>
                 <th class="py-2 px-4 border-b text-left">Data Transporte</th>
-                <th class="py-2 px-4 border-b text-left">Criado em</th>
-                <th class="py-2 px-4 border-b text-left">Atualizado em</th>
                 <th class="py-2 px-4 border-b text-left">Ações</th>
             </tr>
         </thead>
@@ -40,8 +38,7 @@
                     <td class="py-2 px-4 border-b">{{ $logistica->local_origem }}</td>
                     <td class="py-2 px-4 border-b">{{ $logistica->local_destino }}</td>
                     <td class="py-2 px-4 border-b">{{ \Carbon\Carbon::parse($logistica->data_transporte)->format('d/m/Y') }}</td>
-                    <td class="py-2 px-4 border-b">{{ $logistica->created_at->format('d/m/Y H:i') }}</td>
-                    <td class="py-2 px-4 border-b">{{ $logistica->updated_at->format('d/m/Y H:i') }}</td>
+                
                     <td class="py-2 px-4 border-b flex justify-center gap-2">
                         <a href="{{ route('logisticas.edit', $logistica->id) }}" 
                            class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-500 text-sm">
