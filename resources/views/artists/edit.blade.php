@@ -1,18 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto p-6">
-    <h1 class="text-2xl font-bold mb-4">Editar Artista</h1>
+<div class="container mx-auto p-6 bg-white">
+    <h1 class="text-2xl font-bold mb-4 text-[#333D29]">Editar Artista</h1>
 
     @if(session('success'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-md mb-4">
             {{ session('success') }}
         </div>
     @endif
 
- 
     @if($errors->any())
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md mb-4">
             <ul class="list-disc pl-5">
                 @foreach($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -21,28 +20,28 @@
         </div>
     @endif
 
-    <form action="{{ route('artists.update', $artist->id) }}" method="POST" class="bg-white p-6 rounded shadow-md">
+    <form action="{{ route('artists.update', $artist->id) }}" method="POST" class="bg-white p-6 border border-[#A4AC86] rounded-md shadow-md">
         @csrf
         @method('PUT')
 
         <div class="mb-4">
-            <label for="nome" class="block text-gray-700 font-medium mb-2">Nome</label>
-            <input type="text" name="nome" id="nome" value="{{ old('nome', $artist->nome) }}" class="w-full border border-gray-300 rounded px-3 py-2">
+            <label for="nome" class="block text-[#656D4A] font-medium mb-2">Nome</label>
+            <input type="text" name="nome" id="nome" value="{{ old('nome', $artist->nome) }}" class="w-full border border-[#A4AC86] rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#7F4F24]">
         </div>
 
         <div class="mb-4">
-            <label for="nacionalidade" class="block text-gray-700 font-medium mb-2">Nacionalidade</label>
-            <input type="text" name="nacionalidade" id="nacionalidade" value="{{ old('nacionalidade', $artist->nacionalidade) }}" class="w-full border border-gray-300 rounded px-3 py-2">
+            <label for="nacionalidade" class="block text-[#656D4A] font-medium mb-2">Nacionalidade</label>
+            <input type="text" name="nacionalidade" id="nacionalidade" value="{{ old('nacionalidade', $artist->nacionalidade) }}" class="w-full border border-[#A4AC86] rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#7F4F24]">
         </div>
 
         <div class="mb-4">
-            <label for="biografia" class="block text-gray-700 font-medium mb-2">Biografia</label>
-            <textarea name="biografia" id="biografia" rows="5" class="w-full border border-gray-300 rounded px-3 py-2">{{ old('biografia', $artist->biografia) }}</textarea>
+            <label for="biografia" class="block text-[#656D4A] font-medium mb-2">Biografia</label>
+            <textarea name="biografia" id="biografia" rows="5" class="w-full border border-[#A4AC86] rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#7F4F24]">{{ old('biografia', $artist->biografia) }}</textarea>
         </div>
 
         <div class="flex justify-between items-center">
-            <a href="{{ route('artists.index') }}" class="text-gray-600 hover:text-gray-900">Voltar</a>
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Atualizar</button>
+            <a href="{{ route('artists.index') }}" class="text-[#7F4F24] hover:text-[#582F0E]">Voltar</a>
+            <button type="submit" class="bg-[#7F4F24] text-white px-4 py-2 rounded-md shadow hover:bg-[#582F0E] transition">Atualizar</button>
         </div>
     </form>
 </div>
