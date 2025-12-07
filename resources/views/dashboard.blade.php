@@ -28,12 +28,12 @@
         </div>
     </div>
 
-    <!-- Botões de ação rápida centralizados -->
-    <div class="flex justify-center flex-wrap gap-4 mb-8">
-        <a href="{{ route('artists.create') }}" class="bg-gray-300 text-gray-800 px-6 py-2 rounded-2xl shadow hover:bg-gray-200 transition">+ Novo artista</a>
-        <a href="{{ route('obras.create') }}" class="bg-gray-300 text-gray-800 px-6 py-2 rounded-2xl shadow hover:bg-gray-200 transition">+ Nova obra</a>
-        <a href="{{ route('exposicoes.create') }}" class="bg-gray-300 text-gray-800 px-6 py-2 rounded-2xl shadow hover:bg-gray-200 transition">+ Nova exposição</a>
-        <a href="{{ route('logisticas.create') }}" class="bg-gray-300 text-gray-800 px-6 py-2 rounded-2xl shadow hover:bg-gray-200 transition">+ Nova logística</a>
+    <!-- Botões de ação rápida com grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <a href="{{ route('artists.create') }}" class="bg-blue-400 text-white px-6 py-3 rounded-2xl shadow hover:bg-blue-500 text-center transition">+ Novo artista</a>
+        <a href="{{ route('obras.create') }}" class="bg-blue-500 text-white px-6 py-3 rounded-2xl shadow hover:bg-blue-600 text-center transition">+ Nova obra</a>
+        <a href="{{ route('exposicoes.create') }}" class="bg-blue-600 text-white px-6 py-3 rounded-2xl shadow hover:bg-blue-700 text-center transition">+ Nova exposição</a>
+        <a href="{{ route('logisticas.create') }}" class="bg-blue-700 text-white px-6 py-3 rounded-2xl shadow hover:bg-blue-800 text-center transition">+ Nova logística</a>
     </div>
 
     <!-- Últimos registros -->
