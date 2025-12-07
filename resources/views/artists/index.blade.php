@@ -4,19 +4,17 @@
 <div class="container mx-auto p-6">
     <h1 class="text-3xl font-bold mb-6">Lista de Artistas</h1>
 
-    <!-- Mensagem de sucesso -->
     @if(session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
             {{ session('success') }}
         </div>
     @endif
 
-    <!-- Botão adicionar -->
+ 
     <div class="mb-4">
         <a href="{{ route('artists.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Adicionar Artista</a>
     </div>
 
-    <!-- Tabela de artistas -->
     <div class="overflow-x-auto bg-white rounded shadow">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
@@ -53,7 +51,6 @@
         </table>
     </div>
 
-    <!-- Paginação -->
     <div class="mt-4">
         {{ $artists->links() }}
     </div>
