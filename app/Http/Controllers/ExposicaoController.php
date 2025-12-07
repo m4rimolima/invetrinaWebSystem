@@ -1,59 +1,86 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Exposicao;
 use App\Models\Obra;
-use App\Http\Requests\ExposicaoRequest;
+use Illuminate\Http\Request;
 
 class ExposicaoController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        $expos = Exposicao::withCount('obras')->latest()->paginate(10);
-        return view('exposicoes.index', compact('expos'));
+        $exposicoes = Exposicao::with('obra')->paginate(10);
+        return view('exposicoes.index', compact('exposicoes'));
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        $obras = Obra::with('artist')->orderBy('titulo')->get();
+        $obras = Obra::all();
         return view('exposicoes.create', compact('obras'));
     }
 
-    public function store(ExposicaoRequest $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
-        $data = $request->validated();
-        $exposicao = Exposicao::create($data);
-        if (!empty($data['obras'])) {
-            $exposicao->obras()->sync($data['obras']);
-        }
-        return redirect()->route('exposicoes.index')->with('success','Exposição criada.');
+        $validated = $request->validate([
+            'obra_id' => 'required|exists:obras,id',
+            'nome' => 'required|string|max:255',
+            'local' => 'required|string|max:255',
+            'data_inicio' => 'required|date',
+            'data_fim' => 'required|date|after_or_equal:data_inicio',
+        ]);
+
+        Exposicao::create($validated);
+
+        return redirect()->route('exposicoes.index')
+            ->with('success', 'Exposição criada com sucesso!');
     }
 
-    public function show(Exposicao $exposicao)
-    {
-        $exposicao->load('obras.artist');
-        return view('exposicoes.show', compact('exposicao'));
-    }
-
+    /**
+     * Show the form for editing the specified resource.
+     */
     public function edit(Exposicao $exposicao)
     {
-        $obras = Obra::with('artist')->orderBy('titulo')->get();
-        $exposicao->load('obras');
-        return view('exposicoes.edit', compact('exposicao','obras'));
+        $obras = Obra::all();
+        return view('exposicoes.edit', compact('exposicao', 'obras'));
     }
 
-    public function update(ExposicaoRequest $request, Exposicao $exposicao)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Exposicao $exposicao)
     {
-        $data = $request->validated();
-        $exposicao->update($data);
-        $exposicao->obras()->sync($data['obras'] ?? []);
-        return redirect()->route('exposicoes.index')->with('success','Exposição atualizada.');
+        $validated = $request->validate([
+            'obra_id' => 'required|exists:obras,id',
+            'nome' => 'required|string|max:255',
+            'local' => 'required|string|max:255',
+            'data_inicio' => 'required|date',
+            'data_fim' => 'required|date|after_or_equal:data_inicio',
+        ]);
+
+        $exposicao->update($validated);
+
+        return redirect()->route('exposicoes.index')
+            ->with('success', 'Exposição atualizada com sucesso!');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(Exposicao $exposicao)
     {
-        $exposicao->obras()->detach();
         $exposicao->delete();
-        return redirect()->route('exposicoes.index')->with('success','Exposição removida.');
+
+        return redirect()->route('exposicoes.index')
+            ->with('success', 'Exposição removida com sucesso!');
     }
 }

@@ -18,7 +18,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('artists', ArtistController::class);
     Route::resource('obras', ObraController::class);
-    Route::resource('exposicoes', ExposicaoController::class);
+
+    // Corrigido para usar {exposicao} como parâmetro
+    Route::resource('exposicoes', ExposicaoController::class)
+        ->parameters(['exposicoes' => 'exposicao']);
+
     Route::resource('logisticas', LogisticaController::class);
 });
 

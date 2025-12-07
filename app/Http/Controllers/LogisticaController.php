@@ -1,53 +1,67 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Logistica;
 use App\Models\Obra;
-use App\Http\Requests\LogisticaRequest;
+use Illuminate\Http\Request;
 
 class LogisticaController extends Controller
 {
     public function index()
     {
-        $logs = Logistica::with('obra.artist','exposicao')->latest()->paginate(10);
-        return view('logisticas.index', compact('logs'));
+        $logisticas = Logistica::with('obra')->paginate(10);
+        return view('logisticas.index', compact('logisticas'));
     }
 
     public function create()
     {
-        $obras = Obra::with('artist')->orderBy('titulo')->get();
-        $exposicoes = \App\Models\Exposicao::orderBy('nome')->get();
-        return view('logisticas.create', compact('obras','exposicoes'));
+
+        $obras = Obra::all();
+
+        return view('logisticas.create', compact('obras'));
     }
 
-    public function store(LogisticaRequest $request)
+    public function store(Request $request)
     {
-        Logistica::create($request->validated());
-        return redirect()->route('logisticas.index')->with('success','Logística criada.');
-    }
+        $request->validate([
+            'obra_id' => 'required|exists:obras,id',
+            'responsavel' => 'required|string|max:255',
+            'local_origem' => 'required|string|max:255',
+            'local_destino' => 'required|string|max:255',
+            'data_transporte' => 'required|date',
+        ]);
 
-    public function show(Logistica $logistica)
-    {
-        $logistica->load('obra.artist','exposicao');
-        return view('logisticas.show', compact('logistica'));
+        Logistica::create($request->all());
+
+        return redirect()->route('logisticas.index')->with('success', 'Logística adicionada com sucesso!');
     }
 
     public function edit(Logistica $logistica)
     {
-        $obras = Obra::with('artist')->orderBy('titulo')->get();
-        $exposicoes = \App\Models\Exposicao::orderBy('nome')->get();
-        return view('logisticas.edit', compact('logistica','obras','exposicoes'));
+        $obras = Obra::all();
+        return view('logisticas.edit', compact('logistica', 'obras'));
     }
 
-    public function update(LogisticaRequest $request, Logistica $logistica)
+    public function update(Request $request, Logistica $logistica)
     {
-        $logistica->update($request->validated());
-        return redirect()->route('logisticas.index')->with('success','Logística atualizada.');
+        $request->validate([
+            'obra_id' => 'required|exists:obras,id',
+            'responsavel' => 'required|string|max:255',
+            'local_origem' => 'required|string|max:255',
+            'local_destino' => 'required|string|max:255',
+            'data_transporte' => 'required|date',
+        ]);
+
+        $logistica->update($request->all());
+
+        return redirect()->route('logisticas.index')->with('success', 'Logística atualizada com sucesso!');
     }
 
     public function destroy(Logistica $logistica)
     {
         $logistica->delete();
-        return redirect()->route('logisticas.index')->with('success','Logística removida.');
+
+        return redirect()->route('logisticas.index')->with('success', 'Logística removida com sucesso!');
     }
 }
