@@ -37,7 +37,7 @@
             <tbody>
                 @forelse($obras as $obra)
                 <tr style="border-bottom:1px solid #A4AC86;">
-                    <!-- Imagem -->
+                   
                     <td class="px-6 py-4">
                         @if($obra->imagem)
                             <img src="{{ asset('storage/' . $obra->imagem) }}" 
@@ -52,19 +52,19 @@
                         @endif
                     </td>
 
-                    <!-- Título -->
+               
                     <td class="px-6 py-4" style="color:#333D29;">{{ $obra->titulo }}</td>
 
-                    <!-- Artista -->
+                   
                     <td class="px-6 py-4" style="color:#333D29;">{{ $obra->artist->nome ?? '-' }}</td>
 
-                    <!-- Ano -->
+                
                     <td class="px-6 py-4" style="color:#333D29;">{{ $obra->ano ?? '-' }}</td>
 
-                    <!-- Técnica -->
+                  
                     <td class="px-6 py-4" style="color:#333D29;">{{ $obra->tecnica ?? '-' }}</td>
 
-                    <!-- Ações -->
+                  
                     <td class="px-6 py-4 flex space-x-2">
                         <a href="{{ route('obras.edit', $obra->id) }}" 
                            class="px-3 py-1 rounded text-white"
@@ -98,7 +98,7 @@
         </table>
     </div>
 
-    <!-- Paginação -->
+  
     <div class="mt-4">
         {{ $obras->links() }}
     </div>
