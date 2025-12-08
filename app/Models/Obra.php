@@ -14,7 +14,7 @@ class Obra extends Model
         'artist_id',
         'ano',
         'tecnica',
-        'imagem', // se for usar upload de imagem
+        'imagem', 
     ];
 
     public function artist()
