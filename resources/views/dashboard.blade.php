@@ -4,7 +4,7 @@
 <div class="container mx-auto p-6 bg-white">
     <h1 class="text-xl font-semibold mb-6 text-[#333D29] text-left">Olá, {{ auth()->user()->name }} seja bem vindo à galeria In Vetrina</h1>
 
-    <!-- Cards de Estatísticas -->
+
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <div class="bg-white border border-[#A4AC86] rounded-md shadow-md p-6 text-center hover:shadow-xl transition">
             <h2 class="text-xl font-semibold text-[#656D4A]">Artistas</h2>
@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    <!-- Botões de ação rápida -->
+   
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <a href="{{ route('artists.create') }}" class="bg-[#7F4F24] text-white px-6 py-3 rounded-md shadow hover:bg-[#582F0E] text-center transition">+ Novo artista</a>
         <a href="{{ route('obras.create') }}" class="bg-[#A4AC86] text-[#333D29] px-6 py-3 rounded-md shadow hover:bg-[#656D4A] hover:text-white text-center transition">+ Nova obra</a>
@@ -36,9 +36,9 @@
         <a href="{{ route('logisticas.create') }}" class="bg-[#333D29] text-white px-6 py-3 rounded-md shadow hover:bg-black text-center transition">+ Nova logística</a>
     </div>
 
-    <!-- Últimos registros -->
+ 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- Últimos artistas -->
+   
         <div class="bg-white border border-[#A4AC86] rounded-md shadow-md p-6">
             <h3 class="text-lg font-semibold text-[#656D4A] mb-4">Últimos artistas</h3>
             <ul class="space-y-2">
@@ -51,7 +51,7 @@
             </ul>
         </div>
 
-        <!-- Últimas exposições -->
+
         <div class="bg-white border border-[#A4AC86] rounded-md shadow-md p-6">
             <h3 class="text-lg font-semibold text-[#656D4A] mb-4">Últimas exposições</h3>
             <ul class="space-y-2">
