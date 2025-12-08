@@ -5,7 +5,7 @@
 
     <h1 class="text-2xl font-bold mb-4 text-[#333D29]">Editar Exposição</h1>
 
-    {{-- ALERTA DE ERROS --}}
+  
     @if($errors->any())
         <div class="bg-[#A4AC86] border border-[#656D4A] text-[#333D29] px-4 py-3 rounded-md mb-4">
             <ul class="list-disc pl-5">
@@ -16,7 +16,7 @@
         </div>
     @endif
 
-    {{-- FORM --}}
+
     <form action="{{ route('exposicoes.update', $exposicao->id) }}" 
           method="POST" 
           class="bg-white p-6 rounded-md shadow-md">
@@ -24,7 +24,6 @@
         @csrf
         @method('PUT')
 
-        {{-- Obra --}}
         <div class="mb-4">
             <label for="obra_id" class="block text-[#333D29] font-medium mb-2">Obra</label>
             <select name="obra_id" id="obra_id"
@@ -38,7 +37,7 @@
             </select>
         </div>
 
-        {{-- Nome --}}
+    
         <div class="mb-4">
             <label for="nome" class="block text-[#333D29] font-medium mb-2">Nome</label>
             <input type="text" name="nome" id="nome"
@@ -46,7 +45,7 @@
                 class="w-full border border-[#A4AC86] rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#7F4F24]">
         </div>
 
-        {{-- Local --}}
+
         <div class="mb-4">
             <label for="local" class="block text-[#333D29] font-medium mb-2">Local</label>
             <input type="text" name="local" id="local"
@@ -54,7 +53,6 @@
                 class="w-full border border-[#A4AC86] rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#7F4F24]">
         </div>
 
-        {{-- Data Início --}}
         <div class="mb-4">
             <label for="data_inicio" class="block text-[#333D29] font-medium mb-2">Data Início</label>
             <input type="date" name="data_inicio" id="data_inicio"
@@ -62,7 +60,7 @@
                 class="w-full border border-[#A4AC86] rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#7F4F24]">
         </div>
 
-        {{-- Data Fim --}}
+      
         <div class="mb-4">
             <label for="data_fim" class="block text-[#333D29] font-medium mb-2">Data Fim</label>
             <input type="date" name="data_fim" id="data_fim"
@@ -70,7 +68,7 @@
                 class="w-full border border-[#A4AC86] rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#7F4F24]">
         </div>
 
-        {{-- BOTÕES --}}
+     
         <div class="flex justify-between items-center mt-6">
 
             <a href="{{ route('exposicoes.index') }}" 
