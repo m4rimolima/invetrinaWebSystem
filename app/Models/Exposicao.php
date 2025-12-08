@@ -9,7 +9,7 @@ class Exposicao extends Model
 {
     use HasFactory;
 
-    // define explicitamente a tabela
+   
     protected $table = 'exposicoes';
 
     protected $fillable = [
@@ -25,7 +25,7 @@ class Exposicao extends Model
         return $this->belongsTo(Obra::class);
     }
 
-    // Se você tiver relação muitos-para-muitos com obras
+   
     public function obras()
     {
         return $this->belongsToMany(Obra::class, 'exposicao_obra', 'exposicao_id', 'obra_id');
